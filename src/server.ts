@@ -53,7 +53,7 @@ app.post('/user/sign-in', (request, response) => {
                  }
      
                     compare(password, results[0].password, (err, result) => {
-                        if (error) {
+                        if (err) {
                             return response.status(500).json({error: "Erro ao conectar ao banco de dados"})
                         }
 
@@ -65,7 +65,7 @@ app.post('/user/sign-in', (request, response) => {
 
                             console.log(token)
 
-                            return response.status(500).json({token: token})
+                            return response.status(200).json({token: token})
 
                         }
                     })
