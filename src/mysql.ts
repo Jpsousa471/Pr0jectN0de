@@ -1,6 +1,6 @@
 import mysql from 'mysql';
 
-const pool = mysql.createPool({
+export const pool = mysql.createPool({
     "user":"root",
     "password":"1234",
     "database":"api-yt-project",
@@ -8,4 +8,3 @@ const pool = mysql.createPool({
     "port": 3306
 })
 
-export { pool };
