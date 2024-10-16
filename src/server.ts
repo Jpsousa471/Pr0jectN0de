@@ -2,6 +2,7 @@ import express from 'express';
 import userRoutes from './routes/user.routes';
 import videosRoutes from './routes/videos.routes';
 import { config } from 'dotenv';
+import { json } from 'stream/consumers';
 
 config();
 const app = express();
