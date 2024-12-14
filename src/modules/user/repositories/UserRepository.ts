@@ -26,9 +26,7 @@ class UserRepository {
             
                     }
                 )
-        
             })
-        
         })
     }
 
@@ -44,7 +42,7 @@ class UserRepository {
             (error: any, results: any, fildes: any) => {
                 connection.release();
                 if (error) {
-                    return response.status(400).json({error: "Erro na sua autenticação!"})
+                    return response.status(400).json({error: "Este Email já existe, por favor, tente outro"})
                 }
                 // console.log(results[0].email)
 
@@ -57,7 +55,7 @@ class UserRepository {
                             return response.status(400).json({error: "Erro de autenticação!"})
                         }
                         const token = sign({
-                            id: results[0].user_id,
+                            userId: results[0].user_id as string,
                             email: results[0].email
                         }, process.env.SECRET as string, {expiresIn: "1d"});
 
@@ -93,7 +91,7 @@ class UserRepository {
     
                         return response.status(201).send({
                             user: {
-                                nome: resultado[0].name,
+                                name: resultado[0].name,
                                 email: resultado[0].email,
                                 id: resultado[0].user_id,
                             }

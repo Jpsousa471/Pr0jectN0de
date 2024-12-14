@@ -6,6 +6,8 @@ const userRoutes = Router();
 const userRepository = new UserRepository();
 
 userRoutes.post('/sign-up', (request, response) => {
+   console.log(request);
+   // console.log(response);
     userRepository.create(request, response);
 })
 
