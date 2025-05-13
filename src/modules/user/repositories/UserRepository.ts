@@ -9,6 +9,8 @@ class UserRepository {
         const {name, email, password} = request.body;
         pool.getConnection((err: any, connection: any) => {
             hash(password, 10, (err, hash) => {
+                console.log(password)
+
                 if(err) {
                     return response.status(500).json(err)
                 }
@@ -50,7 +52,7 @@ class UserRepository {
                         if (err) {
                             return response.status(500).json({error: "Erro ao conectar ao banco de dados"})
                         }
-                        // console.log(result)
+                        console.log(result)
                         if(!result) {
                             return response.status(400).json({error: "Erro de autenticação!"})
                         }
