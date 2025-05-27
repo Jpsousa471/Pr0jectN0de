@@ -5,9 +5,10 @@ const mysql_1 = require("../../../mysql");
 const uuid_1 = require("uuid");
 class VideoRepository {
     create(request, response) {
-        const { title, description, user_id } = request.body;
+        const { title, description, thumbnail, publishedAt } = request.body;
+        const { userId } = request.userIdToken; // Verifica se userIdToken existe
         mysql_1.pool.getConnection((err, connection) => {
-            connection.query('INSERT INTO videos (videos_id, user_id, title, description) VALUES (?,?,?,?)', [(0, uuid_1.v4)(), user_id, title, description], (error, result, fildes) => {
+            connection.query('INSERT INTO videos (videos_id, user_id, title, description, thumbnail, publishedAt) VALUES (?,?,?,?,?,?)', [(0, uuid_1.v4)(), userId, title, description, thumbnail, publishedAt], (error, result, fildes) => {
                 connection.release();
                 if (error) {
                     return response.status(400).json(error);
@@ -17,10 +18,11 @@ class VideoRepository {
         });
     }
     getVideos(request, response) {
-        const { user_id } = request.body;
+        const { userId } = request.userIdToken; // Verifica se userIdToken existe
+        // const userId = id;
+        // console.log(userId)
         mysql_1.pool.getConnection((err, connection) => {
-            console.log(user_id);
-            connection.query('SELECT * FROM videos WHERE user_id = ?', [user_id], (error, results, fildes) => {
+            connection.query('SELECT * FROM videos WHERE user_id = ?', [userId], (error, results, fildes) => {
                 connection.release();
                 if (error) {
                     return response.status(400).json({ error: "Erro ao buscar os vídeos" });
@@ -30,10 +32,10 @@ class VideoRepository {
             });
         });
     }
-    serachVideos(request, response) {
-        const { serach } = request.query;
+    searchVideos(request, response) {
+        const { search: search } = request.query;
         mysql_1.pool.getConnection((err, connection) => {
-            connection.query('SELECT * FROM videos WHERE description LIKE ?', [`%${serach}%`], (error, results, fildes) => {
+            connection.query('SELECT * FROM videos WHERE title LIKE ?', [`%${search}%`], (error, results, fildes) => {
                 connection.release();
                 if (error) {
                     return response.status(400).json({ error: "Erro ao buscar os vídeos" });

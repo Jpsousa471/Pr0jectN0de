@@ -11,7 +11,7 @@ videosRoutes.post('/create-video', login_1.login, (request, response) => {
 videosRoutes.get('/get-videos', login_1.login, (request, response) => {
     videoRepository.getVideos(request, response);
 });
-videosRoutes.get('/serach', (request, response) => {
-    videoRepository.serachVideos(request, response);
+videosRoutes.get('/search', (request, response) => {
+    videoRepository.searchVideos(request, response);
 });
 exports.default = videosRoutes;
