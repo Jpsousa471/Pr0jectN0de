@@ -36,8 +36,7 @@ class UserRepository {
     login(request: Request, response: Response){
         const {email, password} = request.body;
         pool.getConnection((err: any, connection: any) => {
-        
-           
+            
          connection.query(
             'SELECT * FROM users WHERE email = ?',
             [email],
